@@ -6,3 +6,4 @@ iOS选项卡布局
 （1）点击切换tab(工作，任务，目标）
 (2) 左右滚动切换tab
 (3) 上滑刷新和下拉加载
+![Untitled.gif](http://upload-images.jianshu.io/upload_images/1306084-a7c59a43c8b73c00.gif?imageMogr2/auto-orient/strip)
