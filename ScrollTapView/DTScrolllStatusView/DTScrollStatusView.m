@@ -86,7 +86,7 @@
     _mainScrollView.bounces = NO;
     float mainScrollH = _mainScrollView.frame.size.height;
     _mainScrollView.pagingEnabled = YES;
-    _mainScrollView.contentSize = CGSizeMake(kScreenWidth*4, mainScrollH);
+    _mainScrollView.contentSize = CGSizeMake(kScreenWidth*titleArr.count, mainScrollH);
     _mainScrollView.showsVerticalScrollIndicator = NO;
     _mainScrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:_mainScrollView];
