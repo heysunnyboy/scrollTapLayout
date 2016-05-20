@@ -119,6 +119,10 @@
         [_tableArr addObject:table];
         [_mainScrollView addSubview:table];
     }
+    //获取当前tableview
+    if (_tableArr.count > 0) {
+        _curTable = _tableArr[0];
+    }
 }
 #pragma mark--delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -155,6 +159,14 @@
     }
     return 44;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_scrollStatusDelegate) {
+        if ([_scrollStatusDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            return [_scrollStatusDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
+}
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if(![scrollView isKindOfClass:[UITableView class]])
@@ -162,6 +174,7 @@
     if (isrefresh == NO) {
         int scrollIndex = scrollView.contentOffset.x/kScreenWidth;
         [_statusView changeTag:scrollIndex];
+        _curTable = _tableArr[scrollIndex];
     }
     }
 }
@@ -169,5 +182,6 @@
 {
     
    [_mainScrollView setContentOffset:CGPointMake(kScreenWidth*index, 0) animated:YES];
+    _curTable = _tableArr[index];
 }
 @end

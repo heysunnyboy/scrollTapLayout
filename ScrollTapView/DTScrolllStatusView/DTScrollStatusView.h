@@ -29,6 +29,10 @@ typedef NS_ENUM(NSInteger , ScrollTapType)
 @property (strong , nonatomic) DTStatusView *statusView;
 @property (strong , nonatomic) UIScrollView *mainScrollView;
 /**
+ *  获取当前所选中的tableview
+ */
+@property (strong , nonatomic) UITableView *curTable;
+/**
  *  含有的tableiview 数组  
  */
 @property (strong , nonatomic) NSMutableArray *tableArr;
