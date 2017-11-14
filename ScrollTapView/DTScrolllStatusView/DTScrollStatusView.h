@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger , ScrollTapType)
  *  含有的tableiview 数组  
  */
 @property (strong , nonatomic) NSMutableArray *tableArr;
-@property (strong , nonatomic) id<DTScrollStatusDelegate> scrollStatusDelegate;
+@property (weak , nonatomic) id<DTScrollStatusDelegate> scrollStatusDelegate;
 /**
  *  初始化方法，根据不同类型的自动设置frame，类型有是否有导航栏，tarbar，或者两者都没有
  *
