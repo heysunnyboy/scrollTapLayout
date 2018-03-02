@@ -7,23 +7,40 @@
 //
 
 #import "DTStatusView.h"
+@interface DTStatusView()
+@property (nonatomic, strong)NSMutableArray *buttonArray;
+/// 横线
+@property (nonatomic, strong) UIView *lineView;
+/// 当前索引
+@property (nonatomic, assign) NSInteger currentIndex;
 
+@end
 @implementation DTStatusView
-
-//界面搭建
-- (void)setUpStatusButtonWithTitlt:(NSArray *)titleArray NormalColor:(UIColor *)normalColor SelectedColor:(UIColor *)selectedColor LineColor:(UIColor *)lineColor{
+#pragma mark - private function
+- (void)setUpStatusButtonWithTitle:(NSArray *)titleArray
+                       normalColor:(UIColor *)normalColor
+                     selectedColor:(UIColor *)selectedColor
+                         lineColor:(UIColor *)lineColor{
     
     //按钮创建
-    float width = self.frame.size.width/titleArray.count;
-    for (int i = 0; i < titleArray.count; i++) {
+    NSInteger count = titleArray.count;
+    float     width = self.frame.size.width / count;
+    for (int i = 0; i < count; i++) {
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(width*i, 0, width, self.frame.size.height);
-        [button setTitle:titleArray[i] forState:UIControlStateNormal];
-        [button setTitleColor:(normalColor)?normalColor:[UIColor colorWithRed:139/255.0 green:141/255.0 blue:141/255.0 alpha:1] forState:UIControlStateNormal];
-        [button setTitleColor:selectedColor forState:UIControlStateSelected];
-        button.tag = i;
+        button.frame = CGRectMake(width * i,
+                                          0,
+                                      width,
+                     self.frame.size.height);
+        /// 标题
+        [button setTitle:titleArray[i]
+                forState:UIControlStateNormal];
+        [button setTitleColor:(normalColor) ? normalColor: DTColor(139, 141, 141, 1) forState:UIControlStateNormal];
+        [button setTitleColor:selectedColor
+                     forState:UIControlStateSelected];
         button.titleLabel.font = [UIFont systemFontOfSize:17];
+        /// 点击
+        button.tag = i;
         [button addTarget:self action:@selector(buttonTouchEvent:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
         [self.buttonArray addObject:button];
@@ -33,19 +50,15 @@
         }
     }
     self.currentIndex = 0;
-    
     //线条
     if (lineColor) {
-        
         self.lineView.frame = CGRectMake(0, self.frame.size.height-2, width, 2);
         self.lineView.backgroundColor = lineColor;
     }
-    
 }
 
 //状态切换
 - (void)buttonTouchEvent:(UIButton *)button{
-    
     if (button.tag == self.currentIndex) {
         return;
     }
@@ -57,25 +70,14 @@
     if (!_isScroll) {
         [self changeTag:button.tag];
     }
-    }
-
-#pragma 懒加载
-- (NSMutableArray *)buttonArray{
-    
-    if (!_buttonArray) {
-        _buttonArray = [NSMutableArray array];
-    }
-    
-    return _buttonArray;
 }
--(void)changeTag:(int)tag
+-(void)changeTag:(NSInteger)tag
 {
-    //选择当前的状态
+    // 选择当前的状态
     self.currentIndex = tag;
-    UIButton *button = self.buttonArray[tag];
-    button.selected = YES;
-    
-    //关闭上一个选择状态
+    UIButton *button  = self.buttonArray[tag];
+    button.selected   = YES;
+    // 关闭上一个选择状态
     for (int i = 0; i < self.buttonArray.count; i++) {
         if (i != self.currentIndex) {
             
@@ -83,26 +85,27 @@
             button.selected = NO;
         }
     }
-    
-    //移动横线到对应的状态
+    // 移动横线到对应的状态
     if (self.lineView) {
-        
         [UIView animateWithDuration:0.2 animations:^{
-            
             CGRect frame = self.lineView.frame;
-            float origin = self.frame.size.width/self.buttonArray.count*tag;
-            frame.origin.x = origin;
+            float origin = self.frame.size.width / self.buttonArray.count*tag;
+            frame.origin.x      = origin;
             self.lineView.frame = frame;
         }];
     }
-    
-  
 }
-//下面滑动的横线
-- (UIView *)lineView{
+#pragma mark - 懒加载
+- (NSMutableArray *)buttonArray{
+    if (!_buttonArray) {
+        _buttonArray = [NSMutableArray array];
+    }
+    return _buttonArray;
+}
 
+//下面滑动的横线
+- (UIView *)lineView {
     if (!_lineView) {
-        
         _lineView = [[UIView alloc] init];
         [self addSubview:self.lineView];
     }

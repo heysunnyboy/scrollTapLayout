@@ -11,27 +11,22 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 @protocol DTStatusViewDelegate <NSObject>
-
+/// 选中某个tab
 - (void)statusViewSelectIndex:(NSInteger)index;
-
 @end
 
-
 @interface DTStatusView : UIView
-
-@property (nonatomic,strong)NSMutableArray *buttonArray;
-
-@property (nonatomic,assign) id <DTStatusViewDelegate>delegate;
-
-//横线
-@property (nonatomic,strong) UIView *lineView;
-
-@property (nonatomic, assign) NSInteger currentIndex;
+/// 是否正在滑动
 @property (nonatomic, assign) BOOL isScroll;
-//界面书初始化 titleArray状态值,normalColor正常标题颜色，selectedColor选中的颜色，lineColor下面线条颜色如果等于nil就没有线条
-- (void)setUpStatusButtonWithTitlt:(NSArray *)titleArray NormalColor:(UIColor *)normalColor SelectedColor:(UIColor *)selectedColor LineColor:(UIColor *)lineColor;
-
--(void)changeTag:(int)tag;
+/// 代理
+@property (nonatomic, weak) id <DTStatusViewDelegate>delegate;
+/// 界面初始化
+- (void)setUpStatusButtonWithTitle:(NSArray *)titleArray
+                       normalColor:(UIColor *)normalColor
+                     selectedColor:(UIColor *)selectedColor
+                         lineColor:(UIColor *)lineColor;
+/// 切换tag
+-(void)changeTag:(NSInteger)tag;
 
 
 @end

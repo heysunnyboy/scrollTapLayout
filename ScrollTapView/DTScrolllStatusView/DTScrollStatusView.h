@@ -7,35 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DTStatusView.h"
-#import "MJRefresh.h"
+
+
+
 typedef NS_ENUM(NSInteger , ScrollTapType)
 {
-    ScrollTapTypeWithNavigation,  //含有导航栏
-    ScrollTapTypeWithNavigationAndTabbar, //含有tarbar
-    ScrollTapTypeWithNothing,  //什么都不含有
+    ScrollTapTypeWithNavigation,              //含有导航栏
+    ScrollTapTypeWithNavigationAndTabbar,     //含有tarbar
+    ScrollTapTypeWithNothing,                 //什么都不含有
 };
 @protocol DTScrollStatusDelegate<UITableViewDelegate,UITableViewDataSource>
 
--(void)refreshViewWithTag:(int)tag andIsHeader:(BOOL)isHeader;
+- (void)refreshViewWithTag:(NSInteger)tag
+                  isHeader:(BOOL)isHeader;
 
 @end
-@interface DTScrollStatusView : UIView<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,DTStatusViewDelegate>
-{
+@interface DTScrollStatusView : UIView{
     BOOL isrefresh;
-    UIColor *curSelectTabColor;
-    UIColor *curNormalTabColor;
 }
-@property (strong , nonatomic) DTStatusView *statusView;
-@property (strong , nonatomic) UIScrollView *mainScrollView;
 /**
- *  获取当前所选中的tableview
- */
-@property (strong , nonatomic) UITableView *curTable;
-/**
- *  含有的tableiview 数组  
+ *  含有的tableiview 数组
  */
 @property (strong , nonatomic) NSMutableArray *tableArr;
+
 @property (weak , nonatomic) id<DTScrollStatusDelegate> scrollStatusDelegate;
 /**
  *  初始化方法，根据不同类型的自动设置frame，类型有是否有导航栏，tarbar，或者两者都没有
@@ -45,7 +39,8 @@ typedef NS_ENUM(NSInteger , ScrollTapType)
  *
  *  @return <#return value description#>
  */
--(instancetype)initWithTitleArr:(NSArray *)titleArr andType:(ScrollTapType)type;
+- (instancetype)initWithTitleArr:(NSArray *)titleArr
+                            type:(ScrollTapType)type;
 /**
  *  初始化方法，根据不同类型的自动设置frame，类型有是否有导航栏，tarbar，或者两者都没有
  *
@@ -56,15 +51,10 @@ typedef NS_ENUM(NSInteger , ScrollTapType)
  *
  *  @return <#return value description#>
  */
--(instancetype)initWithTitleArr:(NSArray *)titleArr andType:(ScrollTapType)type andNormalTabColor:(UIColor *)normalTabColor andSelectTabColor:(UIColor *)selectTabColor;
-/**
- *  初始化
- *
- *  @param frame    frame
- *  @param titleArr 标题
- *
- *  @return <#return value description#>
- */
+- (instancetype)initWithTitleArr:(NSArray *)titleArr
+                            type:(ScrollTapType)type
+                  normalTabColor:(UIColor *)normalTabColor
+                  selectTabColor:(UIColor *)selectTabColor
+                       lineColor:(UIColor *)lineColor;
 
--(instancetype)initWithFrame:(CGRect)frame andTitleArr:(NSArray *)titleArr;
 @end

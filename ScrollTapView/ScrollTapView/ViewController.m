@@ -17,14 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"列表";
-    _scrollTapViw = [[DTScrollStatusView alloc]initWithTitleArr:@[@"工作",@"任务",@"目标"] andType:ScrollTapTypeWithNavigation];
+    _scrollTapViw = [[DTScrollStatusView alloc]initWithTitleArr:@[@"工作",
+                                                                  @"任务",
+                                                                  @"目标"]
+                                                           type:ScrollTapTypeWithNavigation];
     _scrollTapViw.scrollStatusDelegate = self;
     [self.view addSubview:_scrollTapViw];
-    // Do any additional setup after loading the view, typically from a nib.
 }
-#pragma mark -- delegate
--(void)refreshViewWithTag:(int)tag andIsHeader:(BOOL)isHeader
-{
+#pragma mark -- DTScrollStatusDelegate
+- (void)refreshViewWithTag:(NSInteger)tag
+                  isHeader:(BOOL)isHeader {
     if(isHeader)
     {
         if(tag == 1)
@@ -32,18 +34,19 @@
             UITableView *table = _scrollTapViw.tableArr[tag -1];
             [table reloadData];
         }
-        NSLog(@"当前%d个tableview 的头部正在刷新",tag);
+        NSLog(@"当前%ld个tableview 的头部正在刷新",tag);
     }
     else
     {
-        NSLog(@"当前%d个tableview 的尾部正在刷新",tag);
+        NSLog(@"当前%ld个tableview 的尾部正在刷新",tag);
     }
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+#pragma mark - tableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
     if (!cell) {
@@ -60,9 +63,10 @@
     {
         cell.textLabel.text = @"目标";
     }
+    cell.textLabel.textColor = [UIColor redColor];
     return cell;
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView.tag == 1) {
         return 1;
