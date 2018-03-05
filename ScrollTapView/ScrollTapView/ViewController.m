@@ -9,7 +9,8 @@
 #import "ViewController.h"
 #import "DTScrollStatusView.h"
 @interface ViewController ()<DTScrollStatusDelegate>
-@property (strong , nonatomic) DTScrollStatusView *scrollTapViw;
+///
+@property (nonatomic, strong) DTScrollStatusView *scrollTapView;
 @end
 
 @implementation ViewController
@@ -17,12 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"列表";
-    _scrollTapViw = [[DTScrollStatusView alloc]initWithTitleArr:@[@"工作",
+    _scrollTapView = [[DTScrollStatusView alloc]initWithTitleArr:@[@"工作",
                                                                   @"任务",
                                                                   @"目标"]
                                                            type:ScrollTapTypeWithNavigation];
-    _scrollTapViw.scrollStatusDelegate = self;
-    [self.view addSubview:_scrollTapViw];
+    _scrollTapView.scrollStatusDelegate = self;
+    [self.view addSubview:_scrollTapView];
 }
 #pragma mark -- DTScrollStatusDelegate
 - (void)refreshViewWithTag:(NSInteger)tag
