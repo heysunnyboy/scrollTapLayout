@@ -22,9 +22,7 @@ typedef NS_ENUM(NSInteger , ScrollTapType)
                   isHeader:(BOOL)isHeader;
 
 @end
-@interface DTScrollStatusView : UIView{
-    BOOL isrefresh;
-}
+@interface DTScrollStatusView : UIView
 /**
  *  含有的tableiview 数组
  */

@@ -11,26 +11,15 @@
 #import "DTStatusView.h"
 #import "MJRefresh.h"
 
-#define IS_IPHONE_X  (kScreenWidth == 375.f && kScreenHeight == 812.f)
-#define kStatusBarHeight          [[UIApplication sharedApplication] statusBarFrame].size.height
-#define kNavBarHeight             44.0
-#define kTabBarHeight             (IS_IPHONE_X ? 83.f : 49.f)
-#define kTopHeight                (kStatusBarHeight + kNavBarHeight)
-
 @interface DTScrollStatusView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,DTStatusViewDelegate>
+/// 头部
+@property (nonatomic, strong) DTStatusView *statusView;
 
-/**
- *  头部
- */
-@property (strong , nonatomic) DTStatusView *statusView;
-
-@property (strong , nonatomic) UIScrollView *mainScrollView;
-/**
- *  获取当前所选中的tableview
- */
-@property (strong , nonatomic) UITableView *curTable;
-
-
+@property (nonatomic, strong) UIScrollView *mainScrollView;
+/// 当前的table
+@property (nonatomic, strong) UITableView *curTable;
+/// 是否正在刷新
+@property (nonatomic, assign) BOOL isRefresh;
 @end
 
 @implementation DTScrollStatusView
@@ -132,7 +121,7 @@
                                                    height - statusViewHeight);
     self.mainScrollView.contentSize   = CGSizeMake(kScreenWidth * titleArr.count, 0);
     // 创建列表
-    float mainScrollH =                                                    height - statusViewHeight;
+    float mainScrollH = height - statusViewHeight;
     for (NSInteger i = 0; i < titleArr.count; i++) {
         [self createTable:i height:mainScrollH];
     }
@@ -150,27 +139,26 @@
                                                                       height)];
     table.delegate   = self;
     table.dataSource = self;
-    table.tag        = index + 1;
+    table.tag        = index;
     table.tableFooterView = [[UIView alloc]init];
-    __weak typeof(self) weakSelf = self;
+    /// 刷新回调
     table.mj_header =  [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        isrefresh = YES;
         if (_scrollStatusDelegate && [_scrollStatusDelegate respondsToSelector:@selector(refreshViewWithTag:isHeader:)]) {
-            [weakSelf.scrollStatusDelegate refreshViewWithTag:table.tag
+            [_scrollStatusDelegate refreshViewWithTag:table.tag
                                                      isHeader:YES];
             [table.mj_header endRefreshing];
-            isrefresh = NO;
+            _isRefresh = NO;
         }
     }];
     table.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        isrefresh = YES;
+        _isRefresh = YES;
         if (_scrollStatusDelegate && [_scrollStatusDelegate respondsToSelector:@selector(refreshViewWithTag:isHeader:)]) {
-            isrefresh = YES;
-            [weakSelf.scrollStatusDelegate refreshViewWithTag:table.tag
+            _isRefresh = YES;
+            [_scrollStatusDelegate refreshViewWithTag:table.tag
                                                      isHeader:NO];
         }
         [table.mj_footer endRefreshing];
-        isrefresh = NO;
+        _isRefresh = NO;
     }];
     [self.tableArr addObject:table];
     [self.mainScrollView addSubview:table];
@@ -214,7 +202,7 @@
 #pragma mark - scrollview Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (![scrollView isKindOfClass:[UITableView class]]) {
-        if (isrefresh == NO) {
+        if (_isRefresh == NO) {
             int scrollIndex = scrollView.contentOffset.x / kScreenWidth;
             /// 获取当前的被选中的列表
             _curTable       = _tableArr[scrollIndex];

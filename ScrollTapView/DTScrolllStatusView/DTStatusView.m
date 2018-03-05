@@ -26,28 +26,16 @@
     NSInteger count = titleArray.count;
     float     width = self.frame.size.width / count;
     for (int i = 0; i < count; i++) {
-        
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(width * i,
-                                          0,
-                                      width,
-                     self.frame.size.height);
+        UIButton *button = [self createButtonByIndex:i normalColor:normalColor selectedColor:selectedColor];
+        button.frame     = CGRectMake(width * i,
+                                  0,
+                                  width,
+                                  self.frame.size.height);
         /// 标题
         [button setTitle:titleArray[i]
                 forState:UIControlStateNormal];
-        [button setTitleColor:(normalColor) ? normalColor: DTColor(139, 141, 141, 1) forState:UIControlStateNormal];
-        [button setTitleColor:selectedColor
-                     forState:UIControlStateSelected];
-        button.titleLabel.font = [UIFont systemFontOfSize:17];
-        /// 点击
-        button.tag = i;
-        [button addTarget:self action:@selector(buttonTouchEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button];
-        [self.buttonArray addObject:button];
+
         
-        if (i == 0) {
-            button.selected = YES;
-        }
     }
     self.currentIndex = 0;
     //线条
@@ -55,6 +43,27 @@
         self.lineView.frame = CGRectMake(0, self.frame.size.height-2, width, 2);
         self.lineView.backgroundColor = lineColor;
     }
+}
+/// 创建button
+- (UIButton *)createButtonByIndex:(NSInteger)index
+                normalColor:(UIColor *)normalColor
+              selectedColor:(UIColor *)selectedColor {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitleColor:(normalColor) ? normalColor: DTColor(139, 141, 141, 1) forState:UIControlStateNormal];
+    [button setTitleColor:selectedColor
+                 forState:UIControlStateSelected];
+    button.titleLabel.font = [UIFont systemFontOfSize:17];
+    /// 点击
+    button.tag = index;
+    [button addTarget:self action:@selector(buttonTouchEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:button];
+    [self.buttonArray addObject:button];
+    /// 第一个默认选中
+    if (index == 0) {
+        button.selected = YES;
+    }
+    return button;
 }
 
 //状态切换

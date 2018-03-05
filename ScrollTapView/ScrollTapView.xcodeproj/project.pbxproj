@@ -107,6 +107,7 @@
 		3D2188731CD789800027E040 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		3D2188741CD789800027E040 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3D21888C1CD78A7A0027E040 /* DTStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTStatusView.m; sourceTree = "<group>"; };
+		3D40DAF0204CD55C00584DB3 /* DTScrollStatusHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTScrollStatusHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +183,7 @@
 		3D2188401CD789800027E040 /* DTScrolllStatusView */ = {
 			isa = PBXGroup;
 			children = (
+				3D40DAF0204CD55C00584DB3 /* DTScrollStatusHeader.h */,
 				3D2188441CD789800027E040 /* DTStatusView.h */,
 				3D21888C1CD78A7A0027E040 /* DTStatusView.m */,
 				3D2188411CD789800027E040 /* DTScrollStatusView.h */,
@@ -608,6 +610,7 @@
 				3D21883C1CD7886C0027E040 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D21883D1CD7886C0027E040 /* Build configuration list for PBXNativeTarget "ScrollTapViewTests" */ = {
 			isa = XCConfigurationList;
@@ -616,6 +619,7 @@
 				3D21883F1CD7886C0027E040 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

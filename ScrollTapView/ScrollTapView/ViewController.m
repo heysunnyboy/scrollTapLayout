@@ -29,11 +29,6 @@
                   isHeader:(BOOL)isHeader {
     if(isHeader)
     {
-        if(tag == 1)
-        {
-            UITableView *table = _scrollTapViw.tableArr[tag -1];
-            [table reloadData];
-        }
         NSLog(@"当前%ld个tableview 的头部正在刷新",tag);
     }
     else
@@ -52,10 +47,10 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     }
-    if (tableView.tag == 1) {
+    if (tableView.tag == 0) {
         cell.textLabel.text = @"工作";
     }
-    else if(tableView.tag == 2)
+    else if(tableView.tag == 1)
     {
         cell.textLabel.text = @"任务";
     }
@@ -63,19 +58,17 @@
     {
         cell.textLabel.text = @"目标";
     }
-    cell.textLabel.textColor = [UIColor redColor];
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView.tag == 1) {
+    if (tableView.tag == 0) {
         return 1;
     }
     else
     {
         return 2;
     }
-
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
